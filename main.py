@@ -13,6 +13,8 @@ token = sys.argv[token_arg_id]
 username = sys.argv[username_arg_id]
 password = sys.argv[pass_arg_id]
 
+print('token : {}\nusername : {}\npassword : {}\n'.format(token,username,password))
+
 _30MinInSec = 30*60
 
 def lastNote(rawNotes):
@@ -40,8 +42,9 @@ if __name__ == '__main__':
     client = discord.Client()
     @client.event
     async def on_ready():
-        lastnote = connectAndGetNotes(username,password)
         print('Connection : successful')
+        lastnote = connectAndGetNotes(username,password)
+        print('Last note @launch :',lastnote)
         #channelID for my private test channel
         channel = await client.fetch_channel(706808514953216020)
         while(True):
