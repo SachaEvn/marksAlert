@@ -36,8 +36,6 @@ def connectAndGetNotes(username,password):
     return lastNote((POSTnote(viewS,cookies,baseURL)))
 
 
-
-
 if __name__ == '__main__':
     client = discord.Client()
     @client.event

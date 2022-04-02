@@ -162,7 +162,6 @@ def POSTnote(viewS, cookies,baseURL):
     # print(resH)
     x = resR.decode('utf-8')
     x = x.split("[CDATA[")
-    print(x)
     x = x[3].split("]]")
     return(x[0])
     
