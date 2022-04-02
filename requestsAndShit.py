@@ -1,21 +1,31 @@
+from email import header
 import http.client
 import requests
 from bs4 import BeautifulSoup
 import urllib
+import sys
+
+baseURL = 'https://aurion.junia.com'
+
+def composeHeader(cookies=None):
+    header = {
+        'Content-type': "application/x-www-form-urlencoded",
+        'Connection': "keep-alive",
+    }
+    if cookies != None:
+        header['Cookie'] = cookies
+    return header
 
 #Requete POST avec http.client (ne fonctionne pas avec requests)
 def POSTlogin(username,password):
-    conn = http.client.HTTPSConnection("aurion.junia.com")
+    conn = http.client.HTTPSConnection(baseURL[8:])
     payload = ('''username='''+username+'''&password='''+password+'''&j_idt28=''')
-    headers = {
-        'Content-type': "application/x-www-form-urlencoded",
-        'Connection': "keep-alive"
-        }
+    headers = composeHeader()
     conn.request("POST", "/login", payload, headers)
     res = conn.getresponse()
-    resS = res.status
+    #resS = res.status
     resH = res.headers
-    resR = res.read()
+    #resR = res.read()
     # print(resS)
     # print(resH)
     # print(resR.decode('utf-8'))
@@ -30,11 +40,7 @@ def Cookies(head):
 
 #requete GET de la page principale (verification de la presence de PRENOM NOM dans la page print) avec le cookie
 def GETmain(cookies,baseURL):
-    headers = {
-        'Content-type': "application/x-www-form-urlencoded",
-        'Connection': "keep-alive",
-        'Cookie': cookies
-        }
+    headers = composeHeader(cookies)
     tempURL = str(baseURL+'/')
     response = requests.get(tempURL, headers=headers)
     # print(response.text)
@@ -58,16 +64,12 @@ def POSTmain(viewS, cookies,baseURL):
                 "form%3Aj_idt52=form%3Aj_idt52&webscolaapp.Sidebar.ID_SUBMENU=submenu_44413&form=form&" +
                 "form%3AlargeurDivCenter=1219&form%3Asauvegarde=&form%3Aj_idt772_focus=&form%3Aj_idt772_input=44323"
                 + "&javax.faces.ViewState=" + viewS)
-    headers = {
-        'Content-type': "application/x-www-form-urlencoded",
-        'Connection': "keep-alive",
-        'Cookie': cookies
-        }
+    headers = composeHeader(cookies)
     conn.request("POST", "/faces/MainMenuPage.xhtml", payload, headers)
     res = conn.getresponse()
-    resS = res.status
-    resH = res.headers
-    resR = res.read()
+    #resS = res.status
+    #resH = res.headers
+    #resR = res.read()
     # print(resS)
     # print(resH)
     # print(resR.decode('utf-8'))
@@ -82,16 +84,12 @@ def POSTmainn(viewS, cookies,baseURL):
                 "form%3Aj_idt772_focus=&form%3Aj_idt772_input=44323&" +
                 "form%3Asidebar=form%3Asidebar&form%3Asidebar_menuid=" + menuid
                 + "&javax.faces.ViewState=" + viewS)
-    headers = {
-        'Content-type': "application/x-www-form-urlencoded",
-        'Connection': "keep-alive",
-        'Cookie': cookies
-        }
+    headers = composeHeader(cookies)
     conn.request("POST", "/faces/MainMenuPage.xhtml", payload, headers)
     res = conn.getresponse()
-    resS = res.status
-    resH = res.headers
-    resR = res.read()
+    #resS = res.status
+    #resH = res.headers
+    #resR = res.read()
     # print(resS)
     # print(resH)
     # print(resR.decode('utf-8'))
@@ -99,11 +97,7 @@ def POSTmainn(viewS, cookies,baseURL):
 
 #requete GET avant POST
 def GETnote(cookies,baseURL):
-    headers = {
-        'Content-type': "application/x-www-form-urlencoded",
-        'Connection': "keep-alive",
-        'Cookie': cookies
-        }
+    headers = composeHeader(cookies)
     tempURL = str(baseURL+"/faces/ChoixIndividu.xhtml")
     response = requests.get(tempURL, headers=headers)
     # print(response.text)
@@ -155,8 +149,8 @@ def POSTnote(viewS, cookies,baseURL):
         }
     conn.request("POST", "/faces/ChoixIndividu.xhtml", body=payload, headers=headers, encode_chunked=True)
     res = conn.getresponse()
-    resS = res.status
-    resH = res.headers
+    #resS = res.status
+    #resH = res.headers
     resR = res.read()
     # print(resS)
     # print(resH)
@@ -165,9 +159,6 @@ def POSTnote(viewS, cookies,baseURL):
     x = x[3].split("]]")
     return(x[0])
     
-
-
-
 
 # main()
 # print(cookies, viewS)
