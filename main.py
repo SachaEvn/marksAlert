@@ -61,7 +61,7 @@ if __name__ == '__main__':
             timestamp = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
             if(tmpNote != lastnote):
                 lastnote = tmpNote
-                msg = '||{}|| {} - Nouvelle(s) note(s) parmi celles ci : {}'.format(_pingRole,timestamp)
+                msg = '||@{}|| {} - Nouvelle(s) note(s) parmi celles ci : {}'.format(_pingRole,timestamp)
                 for note in lastnote:
                     print(note)
                 print(msg[12:])
