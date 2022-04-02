@@ -1,4 +1,5 @@
 from time import sleep
+import time
 from requestsAndShit import *
 from datetime import datetime
 from bs4 import BeautifulSoup
@@ -13,6 +14,10 @@ token = sys.argv[token_arg_id]
 username = sys.argv[username_arg_id]
 password = sys.argv[pass_arg_id]
 
+#channels id & role
+_id_private_channel = 706808514953216020
+_id_school_channel = 899648994614071306
+_pingRole = 'botNote'
 print('token : {}\nusername : {}\npassword : {}\n'.format(token,username,password))
 
 _30MinInSec = 30*60
@@ -44,14 +49,16 @@ if __name__ == '__main__':
         lastnote = connectAndGetNotes(username,password)
         print('Last note @launch :',lastnote)
         #channelID for my private test channel
-        channel = await client.fetch_channel(706808514953216020)
+        privateChan = await client.fetch_channel(_id_private_channel)
         while(True):
             tmpNote = connectAndGetNotes(username,password)
-            timestamp = datetime.now().strftime("%d/%m/%Y %H:%M:%S")    
-            print(timestamp,' - last note :',lastnote,'tmp note :',tmpNote)
+            timestamp = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
             if(tmpNote != lastnote):
-                print('Nouvelle note :',tmpNote)
                 lastnote = tmpNote
-                await channel.send('||@everyone||Nouvelle note : ',lastnote)
+                msg = '||{}|| Nouvelle note : {} - {}'.format(_pingRole,lastnote,timestamp)
+                print(msg[12:])
+                await privateChan.send(msg)
+            else:
+                print(timestamp,'- Aucune nouvelle note.')
             sleep(_30MinInSec)
     client.run(token)
