@@ -108,15 +108,7 @@ def POSTnote(viewS, cookies,baseURL):
     viewS = ViewState(GETnote(cookies,baseURL))
     start = str(0)
     rows = str(10000)
-    # payload = ("javax.faces.partial.ajax=true&javax.faces.source=form%3Aj_idt149&javax.faces.partial.execute=form%3AdivRecherche&"
-    #             + "javax.faces.partial.render=form%3AdataTableFavori&form%3Aj_idt149=form%3Aj_idt149&form=form&form%3AlargeurDivCenter=1603&form%"
-    #             + "3AmessagesRubriqueInaccessible=&form%3Asearch-texte=&form%3Asearch-texte-avancer=&form%3Ainput-expression-exacte=&form%3Ainput-un-des-mots=&"
-    #             + "form%3Ainput-aucun-des-mots=&form%3Ainput-nombre-debut=&form%3Ainput-nombre-fin=&form%3Aj_idt133_input=PeriodePersonnalisee&form%"
-    #             + "3AcalendarDebut_input=01%2F01%2F20&form%3AcalendarFin_input=31%2F01%2F30&form%3Aj_idt181_reflowDD=0_0&form%3Aj_idt181%3Aj_idt255%3Afilter=&"
-    #             + "form%3Aj_idt181%3Aj_idt257%3Afilter=&form%3Aj_idt181%3Aj_idt259%3Afilter=&form%3Aj_idt181%3Aj_idt261%3Afilter=&form%3Aj_idt181%3Aj_idt263%3Afilter=&"
-    #             + "form%3Aj_idt181%3Aj_idt265%3Afilter=&form%3Aj_idt242_focus=&form%3Aj_idt242_input=44323"
-    #             + "&javax.faces.ViewState="+ urllib.parse.quote(viewS))
-    
+
     payload = ("javax.faces.partial.ajax=true&javax.faces.source=form%3Aj_idt181&" +
                 "javax.faces.partial.execute=form%3Aj_idt181&javax.faces.partial.render=form%3Aj_idt181&" +
                 "form%3Aj_idt181=form%3Aj_idt181&form%3Aj_idt181_pagination=true&" +
@@ -149,11 +141,7 @@ def POSTnote(viewS, cookies,baseURL):
         }
     conn.request("POST", "/faces/ChoixIndividu.xhtml", body=payload, headers=headers, encode_chunked=True)
     res = conn.getresponse()
-    #resS = res.status
-    #resH = res.headers
     resR = res.read()
-    # print(resS)
-    # print(resH)
     x = resR.decode('utf-8')
     x = x.split("[CDATA[")
     x = x[3].split("]]")
