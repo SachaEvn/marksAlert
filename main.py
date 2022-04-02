@@ -6,10 +6,14 @@ from bs4 import BeautifulSoup
 import discord
 import sys
 
+token_arg_id = 1
+username_arg_id = 2
+pass_arg_id = 3
 
-token = "OTU5NTI5ODYwNzY0Njk2Njc2.YkdN0g.pQMZbQigY2qrzQ6CIPs8UGiOtJc"
+token = sys.argv[token_arg_id]
+username = sys.argv[username_arg_id]
+password = sys.argv[pass_arg_id]
 
-username,password = sys.argv[1],sys.argv[2]
 _30MinInSec = 30*60
 
 def lastNote(rawNotes):
@@ -35,7 +39,6 @@ def connectAndGetNotes(username,password):
 
 if __name__ == '__main__':
     client = discord.Client()
-    
     @client.event
     async def on_ready():
         lastnote = connectAndGetNotes(username,password)
