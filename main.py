@@ -56,7 +56,7 @@ if __name__ == '__main__':
        
         privateChan = await client.fetch_channel(_id_private_channel)
         while(True):
-            sleep(30)#_30MinInSec)
+            sleep(_30MinInSec)
             tmpNote = connectAndGetNotes(username,password)
             timestamp = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
             if(tmpNote != lastnote):
@@ -68,6 +68,6 @@ if __name__ == '__main__':
                 await privateChan.send(msg)
             else:
                 print(timestamp,'- Aucune nouvelle note.')
-                await privateChan.send('test')
+                #await privateChan.send('test')
     client.run(token)
     
