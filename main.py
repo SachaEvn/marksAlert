@@ -1,7 +1,6 @@
-from multiprocessing.connection import wait
 from time import sleep
 from requestsAndShit import *
-from datetime import datetime 
+from datetime import datetime
 from bs4 import BeautifulSoup
 import discord
 import sys
