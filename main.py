@@ -26,11 +26,8 @@ _30MinInSec = 30*60
 
 def parseLastNote(rawNotes):
     soup = BeautifulSoup(rawNotes,'html.parser')
-    lastnotes = soup.find_all('tr',limit=3)#.find_all('span')#[1].text
-    notes = []
-    for note in lastnotes:
-        notes.append(note.find_all('span')[1].text)
-    return notes
+    lastnotes = soup.find_all('tr')#.find_all('span')#[1].text
+    return len(lastnotes)
 
 def connectAndGetNotes(username,password):
     cookies = Cookies(POSTlogin(username,password))
@@ -49,11 +46,9 @@ if __name__ == '__main__':
     async def on_ready():
         print('Connection : successful')
         lastnote = connectAndGetNotes(username,password)
-        print('Last notes at launch :')
-        for note in lastnote:
-            print(note)
+        print('Nb notes at launch :',lastnote)
+
         #channelID for my private test channel
-       
         privateChan = await client.fetch_channel(_id_private_channel)
         while(True):
             sleep(_30MinInSec)
@@ -61,13 +56,10 @@ if __name__ == '__main__':
             timestamp = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
             if(tmpNote != lastnote):
                 lastnote = tmpNote
-                msg = '||@{}|| {} - Nouvelle(s) note(s) parmi celles ci : {}'.format(_pingRole,timestamp)
-                for note in lastnote:
-                    print(note)
+                msg = '||@{}|| {} - Nouvelle note !'.format(_pingRole,timestamp)
                 print(msg[12:])
                 await privateChan.send(msg)
             else:
                 print(timestamp,'- Aucune nouvelle note.')
-                #await privateChan.send('test')
     client.run(token)
     
